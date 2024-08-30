@@ -1,0 +1,24 @@
+
+**/
+#include<bits/stdc++.h>
+#ifdef DEBUG_LOCAL
+#include <mydebug/debug.h>
+#endif
+using ll = long long;
+const int N = 5e5+5;
+using namespace std;
+int T,n,t[N],x; map<int,pair<int,int>> mp;
+mt19937 rd(time(0));
+int main(){
+    ios::sync_with_stdio(0),cin.tie(0);
+    auto f = [&](int x , int y){return 3 * max(x + 1 , y) + 4 + x * y + x + 2 * y;};
+    cin >> n;
+    for(int i = 1;i <= n;i ++){
+        auto ck = [&](int x){
+            for(int j = 1;j < i;j ++) if(mp.count(f(x,t[j])) || mp.count(f(t[j],x)) || f(t[j],x) == f(x,t[j])) return false;
+            return !mp.contains(f(x,x));
+        }; for(t[i] = rd() % (30 * n - 2) + 1;!ck(t[i]);t[i] = rd() % (30 * n - 2) + 1);
+        for(int j = 1;j <= i;j ++) mp[f(t[i],t[j])] = {i,j},mp[f(t[j],t[i])] = {j,i};
+        cout << "XO" << string(t[i],'X') << endl;
+    }for(cin >> T;T --;) cin >> x,cout << mp[x].first << " " << mp[x].second << endl;
+}
