@@ -1,0 +1,43 @@
+class Solution {
+    function splitListToParts($head, $k) {
+        $length = 0;
+        $current = $head;
+        $parts = [];
+
+        while ($current) {
+            $length++;
+            $current = $current->next;
+        }
+
+        $base_size = intdiv($length, $k);
+        $extra = $length % $k;
+        $current = $head;
+
+        for ($i = 0; $i < $k; $i++) {
+            $part_size = $base_size + ($extra > 0 ? 1 : 0);
+            $part_head = $part_tail = null;
+
+            for ($j = 0; $j < $part_size; $j++) {
+                if ($part_head === null) {
+                    $part_head = $part_tail = $current;
+                } else {
+                    $part_tail->next = $current;
+                    $part_tail = $part_tail->next;
+                }
+
+                if ($current) {
+                    $current = $current->next;
+                }
+            }
+
+            if ($part_tail) {
+                $part_tail->next = null;
+            }
+
+            array_push($parts, $part_head);
+            $extra = max($extra - 1, 0);
+        }
+
+        return $parts;
+    }
+}
