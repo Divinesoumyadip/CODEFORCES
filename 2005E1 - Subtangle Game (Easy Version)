@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define N 305
+int T,l,n,m,a[N],c[N][N];
+bool f[N][N][N];
+signed main(){
+	ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+	cin>>T;
+	while(T--){
+		cin>>l>>n>>m;
+		for(int i=1;i<=l;i++)cin>>a[i];
+		for(int i=1;i<=n;i++)for(int j=1;j<=m;j++)cin>>c[i][j];
+		for(int id=l;id;id--){
+			for(int i=n;i;i--)for(int j=m;j;j--){
+				f[i][j][id]=f[i+1][j][id]||f[i][j+1][id];
+				if(c[i][j]==a[id]&&!f[i+1][j+1][id+1])f[i][j][id]=1;
+			}
+		}
+		cout<<(f[1][1][1]?'T':'N')<<'\n';
+		for(int i=1;i<=n;i++)for(int j=1;j<=m;j++)for(int k=1;k<=l;k++)f[i][j][k]=0;
+	}
+	return 0;
+}
