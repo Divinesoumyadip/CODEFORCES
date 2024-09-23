@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define f(n) for (int i = 1, _n = n; i <= _n; i++)
+#define r ({int x; cin >> x; x; })
+
+int64_t v[1000005];
+int64_t p[500005];
+
+int32_t main() {
+  mt19937_64 m(chrono::steady_clock::now().time_since_epoch().count());
+  f(1e6) {
+    v[i] = m();
+  }
+  f(r) {
+    int n = r, q = r;
+    f(n) p[i] = p[i - 1] ^ v[r];
+    f(q) cout << ((p[r - 1] ^ p[r]) ? "NO" : "YES") << "\n";
+  }
+}
