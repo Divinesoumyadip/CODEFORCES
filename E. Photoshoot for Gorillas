@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+#define __SHI__ signed main()
+#define fastio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define ll long long
+#define INF (int)1e18
+#define int ll
+#define vi vector<int>
+#define vii vector<int,int>
+#define MAXN (int)3e5 + 7
+#define FOR(i, a, b) for (int i = a; i <= b; ++i)
+#define FOD(i, a, b) for (int i = a; i >= b; --i)
+#define FORR(i, a, b, c) for (int i = a; i <= b; i += c)
+#define endl "\n"
+#define NO {cout << "NO" << endl; return;}
+#define YES {cout << "YES" << endl; return;}
+#define nn cout << "NO" << endl;
+#define yy cout << "YES" << endl;
+#define file(name)  if (fopen(name".inp", "r")) { freopen(name".inp", "r", stdin); freopen(name".out", "w", stdout); }
+using namespace std;
+
+bool comp(int a, int b)
+{
+    return a > b;
+}
+
+void solve()
+{
+    int n, m, k;
+    cin >> n >> m >> k;
+    int w;
+    cin >> w;
+    vector<ll> a (w + 3, 0); ll tmpw = 0, tmph = 0;
+    for (int i = 0; i < w; ++i) cin >> a[i];
+    sort(a.begin(), a.end(), comp);
+    vector<ll> ans;
+    for (int i = 0; i < n; ++i)
+    {
+      for (int j = 0; j < m; ++j)
+      {
+          tmpw = min(n - 1, i + k - 1) - max(0LL, i - k + 1) + 1 - k + 1;
+          tmph = min(m - 1, j + k - 1) - max(0LL, j - k + 1) + 1 - k + 1;
+          ans.push_back(tmpw * tmph);
+      }
+    }
+    sort(ans.begin(), ans.end(), comp);
+    ll res = 0;
+    for (int i = 0; i < w; ++i) res += a[i] * ans[i];            
+    cout << res << '\n';
+}
+
+__SHI__
+{
+  fastio;
+  int t;
+  cin >> t;
+  while (t--)
+    solve();
+  return 0;
+}
